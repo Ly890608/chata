@@ -4,14 +4,14 @@ project( app
          VERSION 1.0
 		 DESCRIPTION "Example project for chata" )
 		 
+if ( CHATA_STATIC_LIB )
+    add_compile_definitions( CHATA_STATIC )
+endif()
+		 
 add_executable( app )
 target_sources( app PRIVATE "src/main.cpp" )
 target_link_libraries( app PRIVATE library::chata )
-
-install(TARGETS app
-        RUNTIME DESTINATION bin
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib/static)
+target_compile_features( app PUBLIC cxx_std_14 )
 		
 set_target_properties( app
 	PROPERTIES

@@ -3,10 +3,17 @@ cmake_minimum_required( VERSION 3.12...3.13 )
 project( chata
          VERSION 1.0
 		 DESCRIPTION "base libraries")
-		 
-add_compile_definitions(CHATA_EXPORT)
 
-add_library( chata SHARED )
+if ( CHATA_STATIC_LIB )
+    message("Build static library")
+    add_compile_definitions( CHATA_STATIC )
+    add_library( chata STATIC )
+else()
+    message("Build shared library")
+    add_compile_definitions( CHATA_EXPORT )
+    add_library( chata SHARED )
+endif()
+	
 target_sources( chata
     PRIVATE   "base/Chata.cpp"
     PUBLIC    "../include/chata/base/Chata.h"
