@@ -15,11 +15,12 @@ else()
 endif()
 	
 target_sources( chata
-    PRIVATE     "base/Chata.cpp"
-    PUBLIC      "../include/chata/base/Chata.h"
-	            "../include/chata/base/CommonMacros.h"
-			    "../include/chata/base/CompilerMacros.h"
-			    "../include/chata/base/IntTypes.h"
+	PRIVATE     "base/Math.cpp"
+    PUBLIC      "../include/chata/base/CommonMacros.h"
+				"../include/chata/base/CompilerMacros.h"
+				"../include/chata/base/Export.h"
+				"../include/chata/base/IntTypes.h"
+				"../include/chata/base/Math.h"
 			    "../include/chata/base/MathConstant.h"
 			    "../include/chata/base/PlatformMacros.h" )
 

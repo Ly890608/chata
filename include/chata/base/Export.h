@@ -21,11 +21,3 @@
 #define CHATA_API CHATA_DLLIMPORT
 #endif
 #endif
-
-namespace chata
-{
-struct Module
-{
-    CHATA_API static const char *Name();
-};
-} // namespace chata
