@@ -22,8 +22,10 @@
 #endif
 #endif
 
-namespace chata {
-struct Module {
-  CHATA_API static const char* Name();
+namespace chata
+{
+struct Module
+{
+    CHATA_API static const char *Name();
 };
-}  // namespace chata
+} // namespace chata

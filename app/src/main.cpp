@@ -2,7 +2,7 @@
 
 int main()
 {
-	const char* moduleName = chata::Module::Name();
-	
-	return 0;
+    const char *moduleName = chata::Module::Name();
+
+    return 0;
 }
