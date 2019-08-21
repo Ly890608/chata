@@ -9,14 +9,15 @@ project( ${TARGET}
 )
 
 set( SRCS
-        Chata.cpp
+        Math.cpp
 )
 
 set( PUBLIC_HEADER
-    ${PROJECT_ROOT}/include/chata/base/Chata.h
     ${PROJECT_ROOT}/include/chata/base/CommonMacros.h
     ${PROJECT_ROOT}/include/chata/base/CompilerMacros.h
+    ${PROJECT_ROOT}/include/chata/base/Export.h
     ${PROJECT_ROOT}/include/chata/base/IntTypes.h
+    ${PROJECT_ROOT}/include/chata/base/Math.h
     ${PROJECT_ROOT}/include/chata/base/MathConstant.h
     ${PROJECT_ROOT}/include/chata/base/PlatformMacros.h
 )

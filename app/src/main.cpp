@@ -1,8 +1,7 @@
-#include "chata/base/Chata.h"
+#include "chata/base/Math.h"
 
 int main()
 {
-	const char* moduleName = chata::Module::Name();
-	
-	return 0;
+    float a = chata::DegreesToRadians(90.f);
+    return 0;
 }
