@@ -1,10 +1,16 @@
-cmake_minimum_required( VERSION 3.12...3.15 )
+cmake_minimum_required( VERSION 3.10...3.15 )
 
-project( chata
+set( TARGET ly )
+
+project( ${TARGET}
          VERSION 1.0
-		 DESCRIPTION "c++ utilities" )
+         LANGUAGES CXX
+#		 DESCRIPTION "Main Project" 
+)
 		 
 set( CMAKE_POSITION_INDEPENDENT_CODE ON )
+
+set( PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR} )
 
 option( CHATA_STATIC_LIB "Build static library" ON )
 
