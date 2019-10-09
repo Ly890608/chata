@@ -1,1 +1,6 @@
-add_subdirectory( mathfu )
+add_subdirectory(benchmark)
+add_subdirectory(fmt)
+add_subdirectory(googletest)
+add_subdirectory(json)
+add_subdirectory(mathfu)
+add_subdirectory(robin-map)

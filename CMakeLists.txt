@@ -1,28 +1,68 @@
-cmake_minimum_required( VERSION 3.1...3.15 )
+cmake_minimum_required(VERSION 3.1...3.15)
 
-if( ${CMAKE_VERSION} VERSION_LESS 3.12 )
-    cmake_policy( VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} )
+if(${CMAKE_VERSION} VERSION_LESS 3.12)
+    cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
 endif()
 
-project( chata )
+# Project
+project(chata
+        VERSION     1.0
+	    LANGUAGES   CXX
+	    DESCRIPTION "project chata" 
+)
 
-set( CMAKE_POSITION_INDEPENDENT_CODE ON )
+# Options
+option(CHATA_BUILD_SHARED_LIBS "build chata as a shared library" OFF)
 
-include( CheckIPOSupported )
-    check_ipo_supported( RESULT result )
-if( result )
-    set( CHATA_IPO_SUPPORTED ON )
+# External Settings
+set(BENCHMARK_ENABLE_GTEST_TESTS OFF)
+set(BENCHMARK_ENABLE_TESTING OFF)
+set(BENCHMARK_ENABLE_LTO ON)
+
+# Settings
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(DEFAULT_BUILD_TYPE "Release")
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    message(STATUS "Setting build type to '${DEFAULT_BUILD_TYPE}' as none was specified.")
+    set(CMAKE_BUILD_TYPE "${DEFAULT_BUILD_TYPE}" CACHE STRING 
+            "Choose the type of build." 
+            FORCE)
+    # Set the possible values of build type for cmake-gui
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS 
+            "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}" CACHE STRING
+            "The install location"
+            FORCE)
+    message(STATUS "CMAKE_INSTALL_PREFIX = ${CMAKE_INSTALL_PREFIX}")
+endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+
+# IDEs Friendly
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+# Compiler Flags
+set(CMAKE_CXX_STANDARD 17)
+set(CXX_STANDARD "-std=c++17")
+if (WIN32)
+    set(CXX_STANDARD "/std:c++17")
+endif()
+
+if (MSVC_NATIVE)
+    set(CXX_STANDARD "/std:c++latest")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_STANDARD} /W0 /Zc:__cplusplus")
 else()
-    set( CHATA_IPO_SUPPORTED OFF )
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_STANDARD} -fstrict-aliasing -Wno-unknown-pragmas -Wno-unused-function")
 endif()
 
-set( CHATA_ROOT ${CMAKE_CURRENT_SOURCE_DIR} )
+if (NOT CLANG_CL AND NOT MSVC)
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fomit-frame-pointer -ffunction-sections -fdata-sections")
+endif()
 
-option( CHATA_BUILD_STATIC_LIB "Build static library" OFF )
-option( CHATA_LINK_USE_STATIC_CRT "Link against the static runtime libraries." ON )
-
-if( WIN32 )
-    if ( ${CHATA_LINK_USE_STATIC_CRT} )
+# OS specific
+if(WIN32)
+    option(CHATA_LINK_USE_STATIC_CRT "Link against the static runtime libraries." ON)
+    if (${CHATA_LINK_USE_STATIC_CRT})
         add_compile_options(
             $<$<CONFIG:>:/MT>
             $<$<CONFIG:Debug>:/MTd>
@@ -37,12 +77,27 @@ if( WIN32 )
     endif()
 endif()
 
-message( STATUS "CHATA_IPO_SUPPORTED=${CHATA_IPO_SUPPORTED}" )
-message( STATUS "CHATA_BUILD_STATIC_LIB=${CHATA_BUILD_STATIC_LIB}" )
-message( STATUS "CHATA_LINK_USE_STATIC_CRT=${CHATA_LINK_USE_STATIC_CRT}" )
+# Optimize
+include(CheckIPOSupported)
+check_ipo_supported(RESULT IPO_SUPPORT)
+if(IPO_SUPPORT)
+    message(STATUS "LTO support is enabled")
+    set_property(GLOBAL PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+endif()
 
-add_subdirectory( external )
+find_program(CCACHE_FOUND "ccache")
+if(CCACHE_FOUND)
+    message(STATUS "Using ccache for building.")
+    set_property(GLOBAL PROPERTY LAUNCH_COMPILE ccache)
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
+endif(CCACHE_FOUND)
 
-add_subdirectory( src )
+# Module
+add_subdirectory(external)
+add_subdirectory(chata)
+add_subdirectory(app)
 
-add_subdirectory( app )
+# Test (ctest --verbose)
+enable_testing()
+add_test(NAME chata-tests COMMAND chata-tests)
+add_test(NAME chata-benchmarks COMMAND chata-benchmarks)
