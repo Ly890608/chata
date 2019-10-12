@@ -23,9 +23,11 @@ endif()
 target_sources(${TARGET}
 	PUBLIC		${CMAKE_CURRENT_SOURCE_DIR}/include/chata/BaseDefines.h
 				${CMAKE_CURRENT_SOURCE_DIR}/include/chata/CompilerDefines.h
+				${CMAKE_CURRENT_SOURCE_DIR}/include/chata/Path.h
 				${CMAKE_CURRENT_SOURCE_DIR}/include/chata/String.h
                 ${CMAKE_CURRENT_SOURCE_DIR}/include/chata/TypeDefines.h
-	PRIVATE		${CMAKE_CURRENT_SOURCE_DIR}/src/chata/String.cpp
+	PRIVATE		${CMAKE_CURRENT_SOURCE_DIR}/src/chata/Path.cpp
+				${CMAKE_CURRENT_SOURCE_DIR}/src/chata/String.cpp
 )
 
 target_link_libraries(${TARGET} 

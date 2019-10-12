@@ -2,9 +2,9 @@
 
 namespace chata
 {
-std::vector<string_view> String::Split(string_view str, string_view delims)
+std::vector<std::string_view> String::Split(std::string_view str, std::string_view delims)
 {
-    std::vector<string_view> output;
+    std::vector<std::string_view> result;
     size_t first = 0;
 
     while (first < str.size())
@@ -12,14 +12,15 @@ std::vector<string_view> String::Split(string_view str, string_view delims)
         const auto second = str.find_first_of(delims, first);
 
         if (first != second)
-            output.emplace_back(str.substr(first, second - first));
+            result.emplace_back(str.substr(first, second - first));
 
-        if (second == string_view::npos)
+        if (second == std::string_view::npos)
             break;
 
         first = second + 1;
     }
 
-    return output;
+    result.shrink_to_fit();
+    return std::move(result);
 }
 } // namespace chata

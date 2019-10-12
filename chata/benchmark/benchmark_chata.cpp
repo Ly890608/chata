@@ -7,7 +7,7 @@ static void bench_string_split(benchmark::State &state)
 {
     for (auto _ : state)
     {
-        chata::String::Split(text, ".");
+        auto result = chata::String::Split(text, ".");
     }
 }
 BENCHMARK(bench_string_split);

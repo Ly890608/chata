@@ -13,7 +13,9 @@ project(${TARGET}
 )
 
 add_executable(${TARGET})
-target_sources(${TARGET} 
-                PRIVATE StringTest.cc
-                        unittest.cc)
+target_sources(${TARGET} PRIVATE 
+                        PathTest.cc
+                        StringTest.cc
+                        unittest.cc
+)
 target_link_libraries(${TARGET} PRIVATE chata::chata gtest gtest_main)
