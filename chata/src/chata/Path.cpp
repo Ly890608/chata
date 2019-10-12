@@ -11,6 +11,7 @@ std::string Path::Combine(std::string_view lhs, std::string_view rhs)
     if (!sp)
         result += '/';
     result += rhs;
+    result.shrink_to_fit();
     return std::move(result);
 }
 } // namespace chata
