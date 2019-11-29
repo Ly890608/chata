@@ -17,6 +17,6 @@ jobs:
     - name: cmake
       run: cd build ; cmake .. -G "Visual Studio 16 2019" -A x64 -DCMAKE_BUILD_TYPE=Release
     - name: build
-      run: make -C build
+      run: cmake --build build --config Release
     - name: test
-      run: cd build ; ctest -j 10
+      run: cd build ; ctest
