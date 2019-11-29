@@ -1,18 +1,18 @@
-name: C/C++ CI
+name: Windows
 
 on:
   push:
     branches:
-    - master
+      - master
 
 jobs:
-  build:
-
+  build-windows:
+    name: build-windows
     runs-on: windows-latest
-    
+
     steps:
-    - uses: actions/checkout@v1
-    - name: Run CMake
-      run: cmake
-    - name: Test
-      run: ctest
+      - uses: actions/checkout@v1.0.0
+      - name: Run build script
+        run: |
+          actions\windows\build.bat continuous
+        shell: cmd
