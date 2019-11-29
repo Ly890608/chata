@@ -82,6 +82,7 @@ add_subdirectory(chata)
 add_subdirectory(app)
 
 # Test (ctest --verbose)
+include(CTest) #adds option BUILD_TESTING (default ON)
 enable_testing()
 add_test(NAME chata-tests COMMAND chata-tests)
 add_test(NAME chata-benchmarks COMMAND chata-benchmarks)
