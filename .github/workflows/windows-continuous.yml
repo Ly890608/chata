@@ -12,14 +12,11 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
+    - name: prepare
+      run: mkdir build
     - name: cmake
-      run: |
-        echo "run build"
-        mkdir out\build
-        cd out\build 
-        cmake ..\.. -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=..\install || exit /b
-        cmake --config Release -- /m || exit /b
-        cd ..\..
-        rd /s /q out\build
-        exit /b 0
-      shell: cmd
+      run: cd build ; cmake .. -G "Visual Studio 16 2019" -A x64 -DCMAKE_BUILD_TYPE=Release
+    - name: build
+      run: make -C build
+    - name: test
+      run: cd build ; ctest -j 10
