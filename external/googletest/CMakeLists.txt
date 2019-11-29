@@ -45,6 +45,8 @@ endif()
 # Language "C" is required for find_package(Threads).
 
 # Project version:
+set(GOOGLETEST_VERSION 1.10.0)
+set(INSTALL_GTEST OFF)
 
 if (CMAKE_VERSION VERSION_LESS 3.0)
   project(gtest CXX C)

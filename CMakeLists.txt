@@ -14,11 +14,6 @@ project(chata
 # Options
 option(CHATA_BUILD_SHARED_LIBS "build chata as a shared library" OFF)
 
-# External Settings
-set(BENCHMARK_ENABLE_GTEST_TESTS OFF)
-set(BENCHMARK_ENABLE_TESTING OFF)
-set(BENCHMARK_ENABLE_LTO ON)
-
 # Settings
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(DEFAULT_BUILD_TYPE "Release")
@@ -46,17 +41,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CXX_STANDARD "-std=c++17")
 if (WIN32)
     set(CXX_STANDARD "/std:c++17")
-endif()
-
-if (MSVC_NATIVE)
-    set(CXX_STANDARD "/std:c++latest")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_STANDARD} /W0 /Zc:__cplusplus")
-else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_STANDARD} -fstrict-aliasing -Wno-unknown-pragmas -Wno-unused-function")
-endif()
-
-if (NOT CLANG_CL AND NOT MSVC)
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fomit-frame-pointer -ffunction-sections -fdata-sections")
 endif()
 
 # OS specific

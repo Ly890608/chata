@@ -14,16 +14,16 @@ endforeach()
 
 project (benchmark CXX)
 
-option(BENCHMARK_ENABLE_TESTING "Enable testing of the benchmark library." ON)
+option(BENCHMARK_ENABLE_TESTING "Enable testing of the benchmark library." OFF)
 option(BENCHMARK_ENABLE_EXCEPTIONS "Enable the use of exceptions in the benchmark library." ON)
-option(BENCHMARK_ENABLE_LTO "Enable link time optimisation of the benchmark library." OFF)
+option(BENCHMARK_ENABLE_LTO "Enable link time optimisation of the benchmark library." ON)
 option(BENCHMARK_USE_LIBCXX "Build and test using libc++ as the standard library." OFF)
 if(NOT MSVC)
   option(BENCHMARK_BUILD_32_BITS "Build a 32 bit version of the library." OFF)
 else()
-  set(BENCHMARK_BUILD_32_BITS OFF CACHE BOOL "Build a 32 bit version of the library - unsupported when using MSVC)" FORCE)
+  set(BENCHMARK_BUILD_32_BITS OFF CACHE BOOL "Build a 32 bit vONersion of the library - unsupported when using MSVC)" FORCE)
 endif()
-option(BENCHMARK_ENABLE_INSTALL "Enable installation of benchmark. (Projects embedding benchmark may want to turn this OFF.)" ON)
+option(BENCHMARK_ENABLE_INSTALL "Enable installation of benchmark. (Projects embedding benchmark may want to turn this OFF.)" OFF)
 
 # Allow unmet dependencies to be met using CMake's ExternalProject mechanics, which
 # may require downloading the source code.
@@ -31,7 +31,7 @@ option(BENCHMARK_DOWNLOAD_DEPENDENCIES "Allow the downloading and in-tree buildi
 
 # This option can be used to disable building and running unit tests which depend on gtest
 # in cases where it is not possible to build or find a valid version of gtest.
-option(BENCHMARK_ENABLE_GTEST_TESTS "Enable building the unit tests which depend on gtest" ON)
+option(BENCHMARK_ENABLE_GTEST_TESTS "Enable building the unit tests which depend on gtest" OFF)
 
 set(ENABLE_ASSEMBLY_TESTS_DEFAULT OFF)
 function(should_enable_assembly_tests)
