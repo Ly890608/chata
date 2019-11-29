@@ -45,8 +45,8 @@ endif()
 
 # OS specific
 if(WIN32)
-    option(CHATA_LINK_USE_STATIC_CRT "Link against the static runtime libraries." ON)
-    if (${CHATA_LINK_USE_STATIC_CRT})
+    option(CHATA_USE_STATIC_CRT "Link against the static runtime libraries." ON)
+    if (${CHATA_USE_STATIC_CRT})
         add_compile_options(
             $<$<CONFIG:>:/MT>
             $<$<CONFIG:Debug>:/MTd>
